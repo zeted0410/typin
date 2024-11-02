@@ -37,13 +37,14 @@ function generateSentence() {
 async function storeSentence() {
     const sentence = generateSentence();
     const doc = await getDocs(collection(db, "typingGame"));
-    let tiME = doc.data().timestamp;
-    alert(tiME);
-
-    await setDoc(doc(db, "typingGame", "sentence"), {
-        sentence: sentence,
-        timestamp: serverTimestamp()
-    });
+    const now = new Date();
+    const oneDayLater = new Date(doc.data().timestamp + 24 * 60 * 60 * 1000);
+    if(oneDayLater-now>0){
+        await setDoc(doc(db, "typingGame", "sentence"), {
+            sentence: sentence,
+            timestamp: serverTimestamp()
+        });
+    }
     return sentence;
 }
 
@@ -56,16 +57,20 @@ async function getSentence() {
         return await storeSentence();
     }
 }
+function alertAfterOneDay() {
+    // Get the current date and time
+    
 
-// Reset the sentence at midnight
-function resetSentenceAtMidnight() {
-    const now = new Date();
-    const millisUntilMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0) - now;
+    // Calculate the time 24 hours from now
+    const oneDayLater = new Date(now.getTime() + 24 * 60 * 60 * 1000);
 
-    setTimeout(async function() {
-        await storeSentence();
-        resetSentenceAtMidnight();  // Schedule the next reset
-    }, millisUntilMidnight);
+    // Calculate the remaining time until one day later
+    const timeUntilOneDayLater = oneDayLater - now;
+
+    // Set a timeout to alert "hello" after the remaining time
+    setTimeout(() => {
+        alert("hello");
+    }, timeUntilOneDayLater);
 }
 
 // Initialize the chart
