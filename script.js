@@ -1,3 +1,9 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+import { getFirestore, doc, getDoc, getDocs, collection } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+// Follow this pattern to import other Firebase services
+// import { } from 'firebase/<service>';
+
+// TODO: Replace the following with your app's Firebase project configuration
 const firebaseConfig = {
     apiKey: "AIzaSyDynvu6vPrQ0h-C0IWTEcuuDJn-hZE9v7U",
     authDomain: "typing-48a93.firebaseapp.com",
@@ -8,9 +14,8 @@ const firebaseConfig = {
     measurementId: "G-F2QLKESFNB"
   };
 
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 let startTime, timerInterval;
 let timerStarted = false;
@@ -122,7 +127,7 @@ function updateWpmChart() {
 async function startGame() {
     const sentence = await getSentence();
     document.getElementById('typingInput').value = "";
-    document.getElementById('placeholder').textContent = sentence;
+    document.getElementById('typingInput').placeholder = sentence;
     document.getElementById('result').textContent = "";
     document.getElementById('timeDisplay').textContent = "0.0 seconds";
     document.getElementById('wpmDisplay').textContent = "";
@@ -133,7 +138,6 @@ async function startGame() {
     wpmChart.clear(); // Clear the chart
     document.getElementById('wpmChart').style.display = "none"; // Hide the chart initially
 }
-
 document.getElementById('typingInput').addEventListener('input', function() {
     if (!timerStarted) {
         startTime = new Date(); // Start the timer on first input
@@ -187,4 +191,5 @@ window.onload = function() {
     initializeChart();
     startGame();
     resetSentenceAtMidnight(); // Schedule the first reset
+    alert(sentence);
 }
