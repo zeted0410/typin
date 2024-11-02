@@ -40,6 +40,7 @@ async function storeSentence() {
         sentence: sentence,
         timestamp: serverTimestamp()
     });
+    alert(serverTimestamp());
     return sentence;
 }
 
