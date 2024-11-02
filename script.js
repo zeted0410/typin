@@ -36,7 +36,7 @@ function generateSentence() {
 // Store the sentence in Firestore
 async function storeSentence() {
     const sentence = generateSentence();
-    await db.collection('typingGame').doc('sentence').set({
+    await setDoc(doc(db, "typingGame", "sentence"), {
         sentence: sentence,
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
     });
@@ -45,7 +45,7 @@ async function storeSentence() {
 
 // Get the sentence from Firestore
 async function getSentence() {
-    const doc = await db.collection('typingGame').doc('sentence').get();
+    const doc = await getDocs(collection(db, "typingGame"));
     if (doc.exists) {
         return doc.data().sentence;
     } else {
