@@ -36,11 +36,15 @@ function generateSentence() {
 // Store the sentence in Firestore
 async function storeSentence() {
     const sentence = generateSentence();
+    const doc = await getDocs(collection(db, "typingGame"));
     await setDoc(doc(db, "typingGame", "sentence"), {
         sentence: sentence,
         timestamp: serverTimestamp()
     });
-    alert(serverTimestamp());
+    
+    if (doc.exists) {
+        alert(doc.data().timestamp.toString());
+    }
     return sentence;
 }
 
