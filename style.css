@@ -1,0 +1,91 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #121212;
+    color: #e0e0e0;
+    margin: 0;
+}
+
+.container {
+    text-align: center;
+    background-color: #1e1e1e;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    width: 90%;
+    max-width: 1900px;
+}
+
+textarea, input[type="text"] {
+    width: 100%;
+    max-width: 1900px;
+    padding: 15px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    background-color: transparent;
+    color: #e0e0e0;
+    outline: none;
+    transition: border 0.3s;
+    position: relative;
+    z-index: 2;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    display: inline-block;
+    margin: auto;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#result, #timeDisplay, #wpmDisplay {
+    margin-top: 20px;
+    font-size: 18px;
+}
+
+.input-container {
+    position: relative;
+    width: 100%;
+    max-width: 1900px;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    background-color: transparent;
+    color: #e0e0e0;
+    outline: none;
+    transition: border 0.3s;
+    caret-color: #007bff;
+    position: relative;
+    z-index: 2;
+}
+
+.placeholder {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: #777;
+    pointer-events: none;
+    z-index: 1;
+}
