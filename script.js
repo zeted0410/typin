@@ -36,6 +36,10 @@ function generateSentence() {
 // Store the sentence in Firestore
 async function storeSentence() {
     const sentence = generateSentence();
+    const doc = await getDocs(collection(db, "typingGame"));
+    let tiME = doc.data().timestamp;
+    alert(tiME);
+
     await setDoc(doc(db, "typingGame", "sentence"), {
         sentence: sentence,
         timestamp: serverTimestamp()
@@ -183,6 +187,7 @@ function updateTimeDisplayAndWpm() {
         // Add current WPM data point every 0.1 second
         wpmData.push({ time: timeElapsed.toFixed(1), wpm: wpm.toFixed(1) });
         updateWpmChart();
+        alert(sentence);
     }
 }
 
@@ -191,5 +196,4 @@ window.onload = function() {
     initializeChart();
     startGame();
     resetSentenceAtMidnight(); // Schedule the first reset
-    alert(sentence);
 }
