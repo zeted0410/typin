@@ -37,10 +37,12 @@ function generateSentence() {
 async function storeSentence() {
     const sentence = generateSentence();
     const now1 = new Date();
-    alert(now1);
+    const millitime = now1.getTime();
+    alert(millitime);
+
     await setDoc(doc(db, "typingGame", "sentence"), {
         sentence: sentence,
-        timestamp: now1
+        timestamp: millitime
     });
     return sentence;
 }
