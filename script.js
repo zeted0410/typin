@@ -36,15 +36,10 @@ function generateSentence() {
 // Store the sentence in Firestore
 async function storeSentence() {
     const sentence = generateSentence();
-    const doc = await getDocs(collection(db, "typingGame"));
     await setDoc(doc(db, "typingGame", "sentence"), {
         sentence: sentence,
         timestamp: serverTimestamp()
     });
-    
-    if (doc.exists) {
-        alert(doc.data().timestamp.toString());
-    }
     return sentence;
 }
 
@@ -52,6 +47,7 @@ async function storeSentence() {
 async function getSentence() {
     const doc = await getDocs(collection(db, "typingGame"));
     if (doc.exists) {
+        alert(doc.data().sentence);
         return doc.data().sentence;
     } else {
         return await storeSentence();
