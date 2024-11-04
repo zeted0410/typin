@@ -37,37 +37,28 @@ function generateSentence() {
 async function storeSentence() {
     const sentence = generateSentence();
     const now1 = new Date();
+    const doc = await getDocs(collection(db, "typingGame"));
     const millitime = now1.getTime();
-    alert(millitime);
-
+    
     await setDoc(doc(db, "typingGame", "sentence"), {
         sentence: sentence,
-        timestamp: millitime
+        time: millitime
     });
+    
     return sentence;
 }
 
 // Get the sentence from Firestore
 async function getSentence() {
     const doc = await getDocs(collection(db, "typingGame"));
-    if (doc.exists) {
+    const millitime = now1.getTime();
+    if(doc.data().time + 86400000 < millitime) {
+        return storeSentence();
+    }
+    else{
         return doc.data().sentence;
-    } else {
-        return await storeSentence();
     }
 }
-
-// Reset the sentence at midnight
-function resetSentenceAtMidnight() {
-    const now = new Date();
-    const millisUntilMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0) - now;
-
-    setTimeout(async function() {
-        await storeSentence();
-        resetSentenceAtMidnight();  // Schedule the next reset
-    }, millisUntilMidnight);
-}
-
 // Initialize the chart
 function initializeChart() {
     const ctx = document.getElementById('wpmChart').getContext('2d');
@@ -187,7 +178,6 @@ function updateTimeDisplayAndWpm() {
         // Add current WPM data point every 0.1 second
         wpmData.push({ time: timeElapsed.toFixed(1), wpm: wpm.toFixed(1) });
         updateWpmChart();
-        alert(sentence);
     }
 }
 
@@ -195,5 +185,4 @@ function updateTimeDisplayAndWpm() {
 window.onload = function() {
     initializeChart();
     startGame();
-    resetSentenceAtMidnight(); // Schedule the first reset
 }
