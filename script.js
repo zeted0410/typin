@@ -52,6 +52,7 @@ async function storeSentence() {
 async function getSentence() {
     const doc = await getDocs(collection(db, "typingGame"));
     const millitime = now1.getTime();
+    alert(doc.data().sentence);
     if(doc.data().time + 86400000 < millitime) {
         return storeSentence();
     }
